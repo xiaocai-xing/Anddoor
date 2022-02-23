@@ -16,7 +16,11 @@ public class ResponseCode {
 
     private int USER_NOT_LOGIN_CODE = 10001;
 
+    private int LOGIN_TIMEOUT_CODE = 10002;
+
     private String USER_NAME_FOUND = "用户名已存在，请登录后重试！";
+
+    private String LOGIN_TIMEOUT = "用户登录已失效，请重新登录！";
 
     public int getSUCCESS_CODE(){
         return SUCCESS_CODE;
@@ -81,5 +85,23 @@ public class ResponseCode {
     public void setUSER_NOT_LOGIN_CODE(int USER_NOT_LOGIN_CODE){
         this.USER_NOT_LOGIN_CODE=USER_NOT_LOGIN_CODE;
     }
+
+    public String getLOGIN_TIMEOUT(){
+        return LOGIN_TIMEOUT;
+    }
+
+    public void setLOGIN_TIMEOUT(String LOGIN_TIMEOUT){
+        this.LOGIN_TIMEOUT=LOGIN_TIMEOUT;
+    }
+
+    public int getLOGIN_TIMEOUT_CODE(){
+        return LOGIN_TIMEOUT_CODE;
+    }
+
+    public void setLOGIN_TIMEOUT_CODE(int LOGIN_TIMEOUT_CODE){
+        this.LOGIN_TIMEOUT_CODE=LOGIN_TIMEOUT_CODE;
+    }
+
+
 
 }
