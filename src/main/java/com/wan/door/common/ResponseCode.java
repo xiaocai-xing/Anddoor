@@ -22,6 +22,8 @@ public class ResponseCode {
 
     private String LOGIN_TIMEOUT = "用户登录已失效，请重新登录！";
 
+    private String MISS_HEADER = "缺失token参数，请确认请求参数";
+
     public int getSUCCESS_CODE(){
         return SUCCESS_CODE;
     }
@@ -100,6 +102,14 @@ public class ResponseCode {
 
     public void setLOGIN_TIMEOUT_CODE(int LOGIN_TIMEOUT_CODE){
         this.LOGIN_TIMEOUT_CODE=LOGIN_TIMEOUT_CODE;
+    }
+
+    public String getMISS_HEADER(){
+        return MISS_HEADER;
+    }
+
+    public void setMISS_HEADER(String MISS_HEADER){
+        this.MISS_HEADER=MISS_HEADER;
     }
 
 

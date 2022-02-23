@@ -46,24 +46,33 @@ public class AuthInterceptor extends ResponseCode implements HandlerInterceptor{
                 return false;
             }
         }
-        if(!userService.QueryName(token.ParsingToken(request.getHeader("token")).get("name"))){
-            result.setCode(getUSER_NOT_LOGIN_CODE());
-            result.setError(getUSER_NOT_LOGIN());
+        try{
+            if(!userService.QueryName(token.ParsingToken(request.getHeader("token")).get("name"))){
+                result.setCode(getUSER_NOT_LOGIN_CODE());
+                result.setError(getUSER_NOT_LOGIN());
+                out = response.getWriter();
+                out.append(JSON.toJSONString(result));
+                return false;
+            }
+            SimpleDateFormat timeNow = new SimpleDateFormat("yyyyMMddHHmmss");
+            Date date = new Date();
+            String timeOut = token.ParsingToken(request.getHeader("token")).get("timeOut");
+            String time = timeNow.format(date);
+            if(timeOut.compareTo(time)<0){
+                result.setCode(getLOGIN_TIMEOUT_CODE());
+                result.setError(getLOGIN_TIMEOUT());
+                out = response.getWriter();
+                out.append(JSON.toJSONString(result));
+                return false;
+            }
+        }catch (Exception e){
+            result.setCode(getFAIL_CODE());
+            result.setError(getMISS_HEADER());
             out = response.getWriter();
             out.append(JSON.toJSONString(result));
             return false;
         }
-        SimpleDateFormat timeNow = new SimpleDateFormat("yyyyMMddHHmmss");
-        Date date = new Date();
-        String timeOut = token.ParsingToken(request.getHeader("token")).get("timeOut");
-        String time = timeNow.format(date);
-        if(timeOut.compareTo(time)<0){
-            result.setCode(getLOGIN_TIMEOUT_CODE());
-            result.setError(getLOGIN_TIMEOUT());
-            out = response.getWriter();
-            out.append(JSON.toJSONString(result));
-            return false;
-        }
+
         return true;
     }
 }
