@@ -16,6 +16,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.bind.support.SessionStatus;
 
 import javax.servlet.http.HttpSession;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,7 +35,7 @@ public class User extends ResponseCode{
     }
 
     @RequestMapping("/AccountLogin")
-    public ResponseInfo Login(@RequestBody @Validated AccountLogin accountLogin, HttpSession session){
+    public ResponseInfo Login(@RequestBody @Validated AccountLogin accountLogin, HttpSession session) throws ParseException {
         ResponseInfo result = new ResponseInfo();
         if(!userService.QueryName(accountLogin.getNameUser())){
             result.setCode(getFAIL_CODE());
@@ -46,7 +49,12 @@ public class User extends ResponseCode{
                 session.setAttribute("NameUser",accountLogin.getNameUser());
                 session.setAttribute("role",roleList.get(0).get("rank"));
                 Map<String,String> temp = new HashMap<>();
-                temp.put("token", token.CreateToken(session.getId(),accountLogin.getNameUser(), (String) roleList.get(0).get("rank")));
+                String tokens = token.CreateToken(session.getId(),accountLogin.getNameUser(), (String) roleList.get(0).get("rank"));
+                temp.put("token", tokens);
+                SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
+                Date date = simpleDateFormat.parse(token.ParsingToken(tokens).get("timeOut"));
+                long time = date.getTime();
+                temp.put("timeOut", String.valueOf(time));
                 result.setData(temp);
                 result.setCode(getSUCCESS_CODE());
                 result.setMsg(getSUCCESS());
@@ -106,6 +114,14 @@ public class User extends ResponseCode{
                 result.setMsg(getSUCCESS());
             }
         }
+        return result;
+    }
+
+    @RequestMapping("/UserState")
+    public ResponseInfo UserState(){
+        ResponseInfo result = new ResponseInfo();
+        result.setCode(getSUCCESS_CODE());
+        result.setMsg(getSUCCESS());
         return result;
     }
 
