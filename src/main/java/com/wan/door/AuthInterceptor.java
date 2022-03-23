@@ -12,6 +12,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 @Component
 public class AuthInterceptor extends ResponseCode implements HandlerInterceptor{
@@ -44,21 +46,32 @@ public class AuthInterceptor extends ResponseCode implements HandlerInterceptor{
                 return false;
             }
         }
-        String name = token.ParsingToken(request.getHeader("token")).get("name");
-        System.out.println(name);
-        System.out.println("111111111"+ userService.QueryName(name));
-//        if(!userService.QueryName(token.ParsingToken(request.getHeader("token")).get("name"))){
-//            result.setCode(getUSER_NOT_LOGIN_CODE());
-//            result.setError(getUSER_NOT_LOGIN());
-//            out = response.getWriter();
-//            out.append(JSON.toJSONString(result));
-//            return false;
-//        }
-//        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-//        System.out.println(df);
-//        if(userService.QueryName(token.ParsingToken(request.getHeader("token")).get("timeOut")>)){
-//
-//        }
+        try{
+            if(!userService.QueryName(token.ParsingToken(request.getHeader("token")).get("name"))){
+                result.setCode(getUSER_NOT_LOGIN_CODE());
+                result.setError(getUSER_NOT_LOGIN());
+                out = response.getWriter();
+                out.append(JSON.toJSONString(result));
+                return false;
+            }
+            SimpleDateFormat timeNow = new SimpleDateFormat("yyyyMMddHHmmss");
+            Date date = new Date();
+            String timeOut = token.ParsingToken(request.getHeader("token")).get("timeOut");
+            String time = timeNow.format(date);
+            if(timeOut.compareTo(time)<0){
+                result.setCode(getLOGIN_TIMEOUT_CODE());
+                result.setError(getLOGIN_TIMEOUT());
+                out = response.getWriter();
+                out.append(JSON.toJSONString(result));
+                return false;
+            }
+        }catch (Exception e){
+            result.setCode(getFAIL_CODE());
+            result.setError(getMISS_HEADER());
+            out = response.getWriter();
+            out.append(JSON.toJSONString(result));
+            return false;
+        }
 
         return true;
     }
