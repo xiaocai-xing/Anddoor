@@ -1,6 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
-        <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd" >
 <suite name="Suite">
-    <parameter name="driver" value="chrome" /> <!--测试浏览器：支持火狐，谷歌-->
+    <parameter name="driver" value="ChromeDriver" /> <!--测试浏览器：支持火狐，谷歌-->
     <parameter name="nodeURL" value="" />
+    <parameter name="BaseUrl" value="http://10.1.134.68:8080/#/" />
+
+    <test name="登录失败测试用例：数据驱动"> <!-- 测试用例描述-->
+        <classes>
+            <class name="LoginTest">
+                <methods >
+                    <include name="loginFail" />
+                </methods>
+            </class>
+        </classes>
+    </test> <!-- Test -->
+    <test name="登录成功测试用例">
+
+        <classes>
+            <class name="LoginTest">
+                <methods >
+                    <include name="login" />
+                </methods>
+            </class>
+        </classes>
+    </test> <!-- Test -->
 </suite>

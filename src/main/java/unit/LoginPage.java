@@ -28,5 +28,10 @@ public class LoginPage extends BaseAction{
         Locator locator=getLocator("密码输入框");
         return locator;
     }
+    public Locator 登录按钮() throws IOException
+    {
+        Locator locator=getLocator("登录按钮");
+        return locator;
+    }
 
 }

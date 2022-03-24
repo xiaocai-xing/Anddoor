@@ -123,11 +123,8 @@ public class ElementAction extends BaseTestCase{
         List<WebElement> webElements;
         switch (locator.getBy()){
             case xpath :
-                //log.info("find element By xpath");
+
                 webElements=webDriver.findElements(By.xpath(locator.getElement()));
-                /**
-                 * 出现找不到元素的时候，记录日志文件
-                 */
                 break;
             case id:
 
@@ -163,6 +160,19 @@ public class ElementAction extends BaseTestCase{
                 break;
         }
         return webElements;
+    }
+    /**
+     * 显式等待，程序休眠暂停
+     * @param time 以秒为单位
+     */
+    public void sleep(long time)
+    {
+        try {
+            Thread.sleep(time*1000);
+        } catch (InterruptedException e) {
+            // TODO 自动生成的 catch 块
+            e.printStackTrace();
+        }
     }
     /**
      * 文本框输入操作

@@ -15,5 +15,7 @@
         Desc:元素的描述，元素的中文描述信息-->
         <locator type="id" timeout="3" value="inputloginname"  desc="用户名">用户名输入框</locator>
         <locator type="id" timeout="3" value="inputloginpwd"  desc="用户密码">密码输入框</locator>
+        <locator type="id" timeout="3" value="buttonlogin"  desc="登录按钮">登录按钮</locator>
+
     </page>
 </map>

@@ -7,6 +7,8 @@ import org.testng.annotations.AfterTest;
 import org.testng.annotations.BeforeTest;
 import org.testng.annotations.Parameters;
 
+import java.net.MalformedURLException;
+
 /**
  * @ClassName BaseTestCase
  * @Description TODO
@@ -19,9 +21,8 @@ public class BaseTestCase {
     public static WebDriver webDriver;
     public static String description;
     @BeforeTest
-    @Parameters({"webDriver","nodeURL"})
-
-    public void setup(String driver,String nodeURL){
+    @Parameters({"driver","nodeURL"})
+    public void setup(String driver,String nodeURL)throws MalformedURLException {
         if (nodeURL.equals("")||nodeURL.isEmpty()){
             try {
                 this.webDriver=SelectDriver(driver);
@@ -29,7 +30,7 @@ public class BaseTestCase {
 
                 e.printStackTrace();
             }
-            System.out.println(nodeURL);
+
             this.webDriver.manage().window().maximize();
         }else {
             try {
@@ -48,17 +49,22 @@ public class BaseTestCase {
     }
 
 
-    public  WebDriver SelectDriver(String webdriver){
-        switch(webdriver){
-            case "chrome":
+    public  WebDriver SelectDriver(String browsername){
+        switch(browsername){
+            case "ChromeDriver":
                 System.setProperty("webdriver.chrome.driver", "src/main/resources/chromedr.exe");
                 this.webDriver = new ChromeDriver();
                 break;
-            case"firefox":
+            case"FirefoxDriver":
                 System.setProperty("webdriver.chrome.driver", "src/main/resources/geckodriver.exe");
                 this.webDriver = new FirefoxDriver();
                 break;
         }
         return webDriver;
     }
+//    public static void main(String args[])
+//    {
+//        WebDriver driver2=new ChromeDriver();
+//        driver2.get("http://www.baidu.com");
+//    }
 }
