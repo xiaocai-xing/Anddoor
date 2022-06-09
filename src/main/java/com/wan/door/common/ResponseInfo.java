@@ -1,8 +1,12 @@
 package com.wan.door.common;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-public class ResponseInfo {
+import java.io.Serializable;
+
+public class ResponseInfo  {
+//    private static final long serialVersionUID = 1L;
     private static final ObjectMapper MAPPER = new ObjectMapper();
+
 
     //响应状态
     private int code;
@@ -14,7 +18,7 @@ public class ResponseInfo {
     private String msg;
 
     //响应错误消息
-    private  String error;
+    private  String errorMSG;
 
     //响应业务参数
     private Object data;
@@ -48,11 +52,11 @@ public class ResponseInfo {
     }
 
     public String getError(){
-        return error;
+        return errorMSG;
     }
 
-    public void setError(String error){
-        this.error=error;
+    public void setError(String errorMSG){
+        this.errorMSG=errorMSG;
     }
 
     public Object getData(){
