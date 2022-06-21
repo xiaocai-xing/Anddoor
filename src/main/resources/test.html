@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>${PROJECT_NAME}-第${BUILD_NUMBER}次构建日志</title>
+</head>
+
+<body size="4" leftmargin="8" marginwidth="0" topmargin="8" marginheight="4"
+      offset="0">
+<table width="95%" cellpadding="0" cellspacing="0"
+       style="font-size: 30pt; font-family: Tahoma, Arial, Helvetica, sans-serif">
+    <tr>
+        <td>(本邮件是程序每天定时下发，有问题请联系测试！（公司之后的外网无法打开邮件里的 URL）)</td>
+    </tr>
+    <tr>
+        <td><h2>
+            <font color="#0000FF">构建状态 - ${BUILD_STATUS}</font>
+        </h2></td>
+    </tr>
+    <tr>
+        <td><br />
+            <b><font color="#0B610B">构建信息</font></b>
+            <hr size="3" width="100%" align="center" /></td>
+    </tr>
+    <tr>
+        <td>
+            <ul>
+                <li>项目名称 ： ${PROJECT_NAME}</li>
+                <li>构建编号 ： 第${BUILD_NUMBER}次构建</li>
+                <li>触发原因： ${CAUSE}</li>
+                <li>构建日志： <a href="${BUILD_URL}console">${BUILD_URL}console</a></li>
+                <li >变更集：${JELLY_SCRIPT,template="html"}</a></li>
+
+                <!-- 下面是报告的位置，根据自己项目要求填写 -->
+                <li>SummaryReport:${FILE, path="/opt/jmeter/resultreport/index.html"}</li>
+            </ul>
+            <hr size="3" width="100%" align="center" />
+        </td>
+    </tr>
+
+
+</table>
+</body>
+</html>
