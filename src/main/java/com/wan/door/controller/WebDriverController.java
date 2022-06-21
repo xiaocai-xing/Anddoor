@@ -32,8 +32,6 @@ import java.util.Map;
 public class WebDriverController {
 
     private PageDao pageService;
-
-
     @Autowired
     public void setPageService(PageDao pageService){
         this.pageService = pageService;
